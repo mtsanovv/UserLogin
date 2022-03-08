@@ -11,6 +11,9 @@ namespace UserLogin
     {
         static void Main(string[] args)
         {
+            DateTime yesterday = DateTime.Now.AddDays(-1);
+            Logger.cleanUpOldLogs(yesterday);
+
             string username;
             string password;
 
