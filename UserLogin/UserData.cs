@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UserLogin
 {
-    internal static class UserData
+    public static class UserData
     {
         private static List<User> _testUsers;
         public static List<User> TestUsers
@@ -44,14 +44,9 @@ namespace UserLogin
 
         public static User isUserPassCorrect(string username, string password)
         {
-            foreach(User user in TestUsers) 
-            {
-                if (user.username.Equals(username) && user.password.Equals(password))
-                {
-                    return user;
-                }
-            }
-            return null;
+            IEnumerable<User> matchedUsers = (from user in TestUsers where user.username.Equals(username) && user.password.Equals(password) select user);
+            User userToReturn = matchedUsers.DefaultIfEmpty(null).First();
+            return userToReturn;
         }
 
         public static void setUserActiveTo(string username, DateTime activeUntil)

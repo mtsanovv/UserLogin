@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
 
 namespace UserLogin
 {
-    internal static class Logger
+    public static class Logger
     {
         private static List<string> currentSessionActivities = new List<string>();
         public static void logActivity(string activity)
@@ -15,19 +16,28 @@ namespace UserLogin
             File.AppendAllText("logger.log", activityLine + "\n");
         }
 
-        public static void listLogFile()
+        public static IEnumerable<string> getLoggedActivities()
         {
-            Console.Write(File.ReadAllText("logger.log"));
+            List<string> loggedActivities = new List<string>();
+            string currentLog = File.ReadAllText("logger.log");
+
+            if (!String.Equals(currentLog, String.Empty))
+            {
+                string[] logs = currentLog.Split('\n');
+                foreach (string line in logs)
+                {
+                    if (String.Equals(line, String.Empty))
+                        continue;
+                    loggedActivities.Add(line);
+                }
+            }
+            return loggedActivities;
         }
 
-        public static string getCurrentSessionActivities()
+        public static IEnumerable<string> getCurrentSessionActivities(string filter)
         {
-            StringBuilder sessionLog = new StringBuilder();
-            foreach(string activity in currentSessionActivities)
-            {
-                sessionLog.Append(activity + "\n");
-            }
-            return sessionLog.ToString();
+            List<string> filteredActivities = (from activity in currentSessionActivities where activity.Contains(filter) select activity).ToList();
+            return filteredActivities;
         }
 
         public static void cleanUpOldLogs(DateTime beforeThan)

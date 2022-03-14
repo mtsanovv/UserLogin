@@ -101,7 +101,7 @@ namespace UserLogin
                     changeUserActivity();
                     break;
                 case 4:
-                    Logger.listLogFile();
+                    printLogFile();
                     break;
                 case 5:
                     listLogForCurrentSession();
@@ -173,7 +173,28 @@ namespace UserLogin
 
         public static void listLogForCurrentSession()
         {
-            Console.Write(Logger.getCurrentSessionActivities());
+            StringBuilder sessionLog = new StringBuilder();
+
+            Console.Write("Enter a filter for the activities: ");
+            string filter = Console.ReadLine();
+
+            IEnumerable<string> currentSessionActivities = Logger.getCurrentSessionActivities(filter);
+            foreach (string activity in currentSessionActivities)
+            {
+                sessionLog.Append(activity + "\n");
+            }
+            Console.Write(sessionLog.ToString());
+        }
+
+        public static void printLogFile()
+        {
+            StringBuilder allLogs = new StringBuilder();
+            IEnumerable<string> loggedActivities = Logger.getLoggedActivities();
+            foreach (string activity in loggedActivities)
+            {
+                allLogs.Append(activity + "\n");
+            }
+            Console.Write(allLogs.ToString());
         }
     }
 }
