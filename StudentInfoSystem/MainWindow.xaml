@@ -31,6 +31,7 @@
         <Label Content="Поток:" HorizontalAlignment="Left" Margin="603,244,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="groupTextBox" HorizontalAlignment="Left" Margin="656,280,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="67"/>
         <Label Content="Група:" HorizontalAlignment="Left" Margin="603,276,0,0" VerticalAlignment="Top"/>
-
+        <Button x:Name="enterTestMode" Content="Влез в тестов режим" HorizontalAlignment="Left" Margin="547,40,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.475,-0.316" Height="39" Width="191" Click="enterTestMode_Click"/>
+        <Button x:Name="exitTestMode" Content="Излез от тестов режим" HorizontalAlignment="Left" Margin="547,103,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.475,-0.316" Height="39" Width="191" Click="exitTestMode_Click" Visibility="Hidden"/>
     </Grid>
 </Window>

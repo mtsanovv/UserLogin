@@ -41,12 +41,14 @@ namespace StudentInfoSystem
                 {
                     TextBox textBox = control as TextBox;
                     textBox.Text = "";
+                    continue;
                 }
 
                 if (control is ComboBox)
                 {
                     ComboBox comboBox = control as ComboBox;
                     comboBox.SelectedIndex = -1;
+                    continue;
                 }
             }
         }
@@ -66,6 +68,7 @@ namespace StudentInfoSystem
                 {
                     ComboBox comboBox = control as ComboBox;
                     handleFillingComboBox(comboBox, student);
+                    continue;
                 }
             }
 
@@ -91,7 +94,20 @@ namespace StudentInfoSystem
         {
             string[] delimiter = new string[] { "Dropdown" };
             string fieldName = comboBox.Name.Split(delimiter, StringSplitOptions.None)[0];
-            comboBox.SelectedIndex = (int)student.GetType().GetProperty(fieldName).GetValue(student, null);
+            comboBox.SelectedIndex = (int) student.GetType().GetProperty(fieldName).GetValue(student, null);
+        }
+
+        private void enterTestMode_Click(object sender, RoutedEventArgs e)
+        {
+            Student sampleStudent = StudentData.allStudents.First();
+            fillTextBoxesWithStudentData(sampleStudent);
+            exitTestMode.Visibility = Visibility.Visible;
+        }
+
+        private void exitTestMode_Click(object sender, RoutedEventArgs e)
+        {
+            clearAllTextBoxes();
+            enterTestMode.Visibility = Visibility.Hidden;
         }
     }
 }
