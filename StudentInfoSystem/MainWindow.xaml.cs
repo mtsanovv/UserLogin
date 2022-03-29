@@ -35,9 +35,26 @@ namespace StudentInfoSystem
 
         private void clearAllTextBoxes()
         {
-            foreach(var control in MainGrid.Children)
+            foreach(var control in personalDataGrid.Children)
             {
                 if(control is TextBox)
+                {
+                    TextBox textBox = control as TextBox;
+                    textBox.Text = "";
+                    continue;
+                }
+
+                if (control is ComboBox)
+                {
+                    ComboBox comboBox = control as ComboBox;
+                    comboBox.SelectedIndex = -1;
+                    continue;
+                }
+            }
+
+            foreach (var control in studentInfoGrid.Children)
+            {
+                if (control is TextBox)
                 {
                     TextBox textBox = control as TextBox;
                     textBox.Text = "";
@@ -55,7 +72,7 @@ namespace StudentInfoSystem
 
         private void fillTextBoxesWithStudentData(Student student)
         {
-            foreach (var control in MainGrid.Children)
+            foreach (var control in personalDataGrid.Children)
             {
                 if (control is TextBox)
                 {
@@ -72,11 +89,33 @@ namespace StudentInfoSystem
                 }
             }
 
+            foreach (var control in studentInfoGrid.Children)
+            {
+                if (control is TextBox)
+                {
+                    TextBox textBox = control as TextBox;
+                    handleFillingTextBox(textBox, student);
+                    continue;
+                }
+
+                if (control is ComboBox)
+                {
+                    ComboBox comboBox = control as ComboBox;
+                    handleFillingComboBox(comboBox, student);
+                    continue;
+                }
+            }
         }
 
         private void setIsEnabledOnAllGridChildren(bool trueOrFalse)
         {
-            foreach (var control in MainGrid.Children)
+            foreach (var control in personalDataGrid.Children)
+            {
+                UIElement element = control as UIElement;
+                element.IsEnabled = trueOrFalse;
+            }
+
+            foreach (var control in studentInfoGrid.Children)
             {
                 UIElement element = control as UIElement;
                 element.IsEnabled = trueOrFalse;

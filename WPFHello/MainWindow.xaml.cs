@@ -23,6 +23,17 @@ namespace WPFHello
         public MainWindow()
         {
             InitializeComponent();
+            ListBoxItem[] newItems = new ListBoxItem[2];
+            for(int i = 0; i < newItems.Length; i++)
+            {
+                newItems[i] = new ListBoxItem();
+            }
+            newItems[0].Content = "James";
+            newItems[1].Content = "David";
+            foreach(ListBoxItem item in newItems) {
+                peopleListBox.Items.Add(item);
+            }
+            peopleListBox.SelectedItem = newItems[0];
         }
 
         private void btnHello_Click(object sender, RoutedEventArgs e)
@@ -72,6 +83,13 @@ namespace WPFHello
 
             int result = (int) Math.Pow(n, y);
             MessageBox.Show("n ^ y is " + result);
+        }
+
+        private void currentSelectedPersonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string greetingMsg = (peopleListBox.SelectedItem as ListBoxItem).Content.ToString();
+            MyMessage anotherWindow = new MyMessage();
+            anotherWindow.Show();
         }
     }
 }

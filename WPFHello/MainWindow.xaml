@@ -19,6 +19,13 @@
         <TextBox x:Name="yTextBox" HorizontalAlignment="Left" Margin="90,281,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="nFactorielBtn" Content="Calculate n!" HorizontalAlignment="Left" Margin="144,313,0,0" VerticalAlignment="Top" Click="nFactorielBtn_Click"/>
         <Button x:Name="nToYBtn" Content="Calculate n^y" HorizontalAlignment="Left" Margin="133,338,0,0" VerticalAlignment="Top" Click="nToYBtn_Click"/>
+        <ListBox x:Name="peopleListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="543,211,36,76">
+            <ListBoxItem Content="Mike"/>
+            <ListBoxItem Content="Lisa"/>
+            <ListBoxItem Content="John"/>
+            <ListBoxItem Content="Mary"/>
+        </ListBox>
+        <Button x:Name="currentSelectedPersonBtn" Content="Show currently selected person" HorizontalAlignment="Left" Margin="543,376,0,0" VerticalAlignment="Top" Height="27" Width="221" Click="currentSelectedPersonBtn_Click"/>
 
     </Grid>
 </Window>
