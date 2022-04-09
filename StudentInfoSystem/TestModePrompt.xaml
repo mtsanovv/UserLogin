@@ -1,0 +1,15 @@
+﻿<Window x:Class="StudentInfoSystem.TestModePrompt"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StudentInfoSystem"
+        mc:Ignorable="d"
+        Title="Изберете режим" Height="250" Width="500">
+    <Grid>
+        <Label Content="Стартирай тестов режим?" HorizontalAlignment="Center" Margin="0,58,0,0" VerticalAlignment="Top" FontSize="36"/>
+        <Button x:Name="yesBtn" Content="Да" HorizontalAlignment="Left" Margin="32,173,0,0" VerticalAlignment="Top" FontSize="20" Width="100" Click="yesBtn_Click"/>
+        <Button x:Name="noBtn" Content="Не" HorizontalAlignment="Left" Margin="368,173,0,0" VerticalAlignment="Top" FontSize="20" Width="100" Click="noBtn_Click"/>
+
+    </Grid>
+</Window>

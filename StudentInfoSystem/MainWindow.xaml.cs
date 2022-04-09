@@ -138,15 +138,27 @@ namespace StudentInfoSystem
 
         private void enterTestMode_Click(object sender, RoutedEventArgs e)
         {
-            Student sampleStudent = StudentData.allStudents.First();
-            fillTextBoxesWithStudentData(sampleStudent);
-            exitTestMode.Visibility = Visibility.Visible;
+            loadStudent();
         }
 
         private void exitTestMode_Click(object sender, RoutedEventArgs e)
         {
-            clearAllTextBoxes();
+            resetForm();
+        }
+
+        public void loadStudent()
+        {
+            Student sampleStudent = StudentData.allStudents.First();
+            fillTextBoxesWithStudentData(sampleStudent);
             enterTestMode.Visibility = Visibility.Hidden;
+            exitTestMode.Visibility = Visibility.Hidden;
+        }
+
+        public void resetForm()
+        {
+            clearAllTextBoxes();
+            enterTestMode.Visibility = Visibility.Visible;
+            exitTestMode.Visibility = Visibility.Visible;
         }
     }
 }
