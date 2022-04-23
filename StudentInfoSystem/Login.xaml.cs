@@ -19,31 +19,15 @@ namespace StudentInfoSystem
     /// </summary>
     public partial class Login : Window
     {
-
-        public string Username { get; set; }
-        public string Password { get; set; }
         public Login()
         {
             InitializeComponent();
-            this.DataContext = this;
+
+            DataContext = new LoginVM(closeWindow);
         }
 
-        private void loginBtn_Click(object sender, RoutedEventArgs e)
+        public void closeWindow()
         {
-            UserLogin.User userToLogIn = UserLogin.UserData.isUserPassCorrect(Username, Password);
-            if(userToLogIn == null)
-            {
-                MessageBox.Show("Невалидно потребителско име или парола!");
-                return;
-            }
-            if(userToLogIn.role != (int) UserLogin.UserRoles.STUDENT)
-            {
-                MessageBox.Show("Потребителят не е студент!");
-                return;
-            }
-            MainWindow studentDataWindow = new MainWindow();
-            studentDataWindow.Show();
-            studentDataWindow.loadStudent();
             this.Close();
         }
     }
