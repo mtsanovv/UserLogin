@@ -22,15 +22,8 @@ namespace StudentInfoSystem
     {
         public MainWindow()
         {
-            Loaded += onWindowLoaded;
             InitializeComponent();
-            StudentData.initializeStudentData();
-        }
-
-        private void onWindowLoaded(object sender, RoutedEventArgs e)
-        {
-            degreeDropdown.ItemsSource = Enum.GetValues(typeof(Degree)).Cast<Degree>();
-            statusDropdown.ItemsSource = Enum.GetValues(typeof(StudentStatus)).Cast<StudentStatus>();
+            DataContext = new MainFormVM();
         }
 
         private void clearAllTextBoxes()
@@ -43,13 +36,6 @@ namespace StudentInfoSystem
                     textBox.Text = "";
                     continue;
                 }
-
-                if (control is ComboBox)
-                {
-                    ComboBox comboBox = control as ComboBox;
-                    comboBox.SelectedIndex = -1;
-                    continue;
-                }
             }
 
             foreach (var control in studentInfoGrid.Children)
@@ -58,50 +44,6 @@ namespace StudentInfoSystem
                 {
                     TextBox textBox = control as TextBox;
                     textBox.Text = "";
-                    continue;
-                }
-
-                if (control is ComboBox)
-                {
-                    ComboBox comboBox = control as ComboBox;
-                    comboBox.SelectedIndex = -1;
-                    continue;
-                }
-            }
-        }
-
-        private void fillTextBoxesWithStudentData(Student student)
-        {
-            foreach (var control in personalDataGrid.Children)
-            {
-                if (control is TextBox)
-                {
-                    TextBox textBox = control as TextBox;
-                    handleFillingTextBox(textBox, student);
-                    continue;
-                }
-
-                if (control is ComboBox)
-                {
-                    ComboBox comboBox = control as ComboBox;
-                    handleFillingComboBox(comboBox, student);
-                    continue;
-                }
-            }
-
-            foreach (var control in studentInfoGrid.Children)
-            {
-                if (control is TextBox)
-                {
-                    TextBox textBox = control as TextBox;
-                    handleFillingTextBox(textBox, student);
-                    continue;
-                }
-
-                if (control is ComboBox)
-                {
-                    ComboBox comboBox = control as ComboBox;
-                    handleFillingComboBox(comboBox, student);
                     continue;
                 }
             }
@@ -122,23 +64,17 @@ namespace StudentInfoSystem
             }
         }
 
-        private void handleFillingTextBox(TextBox textBox, Student student)
-        {
-            string[] delimiter = new string[] { "TextBox" };
-            string fieldName = textBox.Name.Split(delimiter, StringSplitOptions.None)[0];
-            textBox.Text = student.GetType().GetProperty(fieldName).GetValue(student, null).ToString();
-        }
-
-        private void handleFillingComboBox(ComboBox comboBox, Student student)
-        {
-            string[] delimiter = new string[] { "Dropdown" };
-            string fieldName = comboBox.Name.Split(delimiter, StringSplitOptions.None)[0];
-            comboBox.SelectedIndex = (int) student.GetType().GetProperty(fieldName).GetValue(student, null);
-        }
-
         private void enterTestMode_Click(object sender, RoutedEventArgs e)
         {
             loadStudent();
+            if(TestStudentsIfEmpty())
+            {
+                CopyTestStudents();
+                CopyTestUsers();
+                MessageBox.Show("No students found in DB!");
+                return;
+            }
+            MessageBox.Show("Students found in DB!");
         }
 
         private void exitTestMode_Click(object sender, RoutedEventArgs e)
@@ -146,10 +82,40 @@ namespace StudentInfoSystem
             resetForm();
         }
 
+        private bool TestStudentsIfEmpty()
+        {
+            StudentInfoContext context = new StudentInfoContext();
+            IEnumerable<Student> queryStudents = context.Students;
+            int countStudents = queryStudents.Count();
+            if(countStudents == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void CopyTestStudents()
+        {
+            StudentInfoContext context = new StudentInfoContext();
+            foreach (Student st in StudentData.allStudents)
+            {
+                context.Students.Add(st);
+            }
+            context.SaveChanges();
+        }
+
+        private void CopyTestUsers()
+        {
+            UserLogin.UserContext context = new UserLogin.UserContext();
+            foreach (UserLogin.User user in UserLogin.UserData.TestUsers)
+            {
+                context.Users.Add(user);
+            }
+            context.SaveChanges();
+        }
+
         public void loadStudent()
         {
-            Student sampleStudent = StudentData.allStudents.First();
-            fillTextBoxesWithStudentData(sampleStudent);
             enterTestMode.Visibility = Visibility.Hidden;
             exitTestMode.Visibility = Visibility.Hidden;
         }

@@ -16,6 +16,10 @@ namespace StudentInfoSystem
             _loginModel = new LoginModel();
             _closeWindowAction = closeWindowAction;
         }
+        public LoginVM()
+        {
+
+        }
         public string Username {
             set
             {

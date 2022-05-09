@@ -14,7 +14,7 @@
         <TextBox HorizontalAlignment="Left" Margin="152,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="207" Text="{Binding Path=Username}"/>
         <Label Content="Парола:" HorizontalAlignment="Left" Margin="10,77,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="152,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="207" Text="{Binding Path=Password}"/>
-        <Button x:Name="loginBtn" Content="Влез" HorizontalAlignment="Center" Margin="0,225,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.545,0.297" Width="111" Command="{Binding LoginCommand}"/>
+        <Button x:Name="loginBtn" Content="Влез" HorizontalAlignment="Center" Margin="0,225,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.545,0.297" Width="111" Command="{Binding LoginBtnCommand}"/>
 
     </Grid>
 </Window>

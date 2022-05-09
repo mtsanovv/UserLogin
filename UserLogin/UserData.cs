@@ -44,33 +44,28 @@ namespace UserLogin
 
         public static User isUserPassCorrect(string username, string password)
         {
-            IEnumerable<User> matchedUsers = (from user in TestUsers where user.username.Equals(username) && user.password.Equals(password) select user);
+            UserContext context = new UserContext();
+            IEnumerable<User> matchedUsers = (from user in context.Users where user.username.Equals(username) && user.password.Equals(password) select user);
             User userToReturn = matchedUsers.DefaultIfEmpty(null).First();
             return userToReturn;
         }
 
         public static void setUserActiveTo(string username, DateTime activeUntil)
         {
-            foreach(User user in _testUsers)
-            {
-                if (user.username.Equals(username))
-                {
-                    user.activeUntil = activeUntil;
-                    Logger.logActivity("Changed active until for user '" + username + "'");
-                }
-            }
+            UserContext context = new UserContext();
+            User user = (from u in context.Users where u.username.Equals(username) select u).First();
+            user.activeUntil = activeUntil;
+            context.SaveChanges();
+            Logger.logActivity("Changed active until for user '" + username + "'");
         }
 
         public static void assignUserRole(string username, UserRoles role)
         {
-            foreach(User user in _testUsers)
-            {
-                if(user.username.Equals(username))
-                {
-                    user.role = (int) role;
-                    Logger.logActivity("Changed role for user '" + username + "'");
-                }
-            }
+            UserContext context = new UserContext();
+            User user = (from u in context.Users where u.username.Equals(username) select u).First();
+            user.role = (int) role;
+            context.SaveChanges();
+            Logger.logActivity("Changed role for user '" + username + "'");
         }
     }
 }

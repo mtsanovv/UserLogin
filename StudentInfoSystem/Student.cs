@@ -1,6 +1,6 @@
 ﻿namespace StudentInfoSystem
 {
-    internal class Student
+    public class Student
     {
         public string firstName { get; set; }
         public string middleName { get; set; }
@@ -13,5 +13,6 @@
         public int year { get; set; }
         public int studentGrouping { get; set; }
         public int group { get; set; }
+        public int studentId { get; set; }
     }
 }

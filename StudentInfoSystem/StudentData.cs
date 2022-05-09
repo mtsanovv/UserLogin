@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace StudentInfoSystem
 {
@@ -23,6 +24,13 @@ namespace StudentInfoSystem
 
             allStudents = new List<Student>();
             allStudents.Add(sampleStudent);
+        }
+
+        public static Student isThereStudent(string facNum)
+        {
+            StudentInfoContext context = new StudentInfoContext();
+            Student result = (from st in context.Students where st.facultyNumber == facNum select st).First();
+            return result;
         }
     }
 }
